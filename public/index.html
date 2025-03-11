@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .todo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+        input {
+            width: 300px;
+            padding: 10px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px;
+            font-size: 20px;
+            cursor: pointer;
+            border: none;
+            border-radius: 10px;
+            color: red;
+        }
+        .add-btn {
+            background-color: #4CAF50;
+        }
+        .add-btn:hover {
+            background-color: #45a049;
+        }
+        .task-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px auto;
+            width: 370px;
+            border-radius: 5px;
+        }
+        .task-text {
+            flex: 1;
+            border: none;
+            background: transparent;
+            font-size: 16px;
+            outline: none;
+        }
+        .edit-btn {
+            background-color: #f4c542;
+        }
+        .edit-btn:hover {
+            background-color: #e5b432;
+        }
+        .delete-btn {
+            background-color: #e74c3c;
+            
+        }
+        .delete-btn:hover {
+            background-color: #c0392b;
+        }
+    </style>
+</head>
+<body>
+    <h1>My To-Do List</h1>
+    <div class="todo-container">
+        <input type="text" id="taskInput" placeholder="Add a new task">
+        <button class="add-btn" onclick="addTask()">Add</button>
+    </div>
+    <ul id="taskList"></ul>
+
+    <script>
+        function addTask() {
+            let taskInput = document.getElementById("taskInput");
+            let taskList = document.getElementById("taskList");
+
+            if (taskInput.value.trim() === "") return;
+
+            let li = document.createElement("li");
+            li.className = "task-item";
+            li.innerHTML = `
+                <input type="text" class="task-text" value="${taskInput.value}" readonly>
+                <button class="edit-btn" onclick="editTask(this)">Edit</button>
+                <button class="delete-btn" onclick="removeTask(this)">Delete</button>
+            `;
+            taskList.appendChild(li);
+            taskInput.value = "";
+        }
+
+        function removeTask(button) {
+            button.parentElement.remove();
+        }
+
+        function editTask(button) {
+            let taskText = button.previousElementSibling;
+            if (taskText.readOnly) {
+                taskText.readOnly = false;
+                taskText.focus();
+                button.textContent = "Save";
+            } else {
+                taskText.readOnly = true;
+                button.textContent = "Edit";
+            }
+        }
+    </script>
+</body>
+</html>
